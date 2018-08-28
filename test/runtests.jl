@@ -1,23 +1,13 @@
 using Attrs
 using Test
 
-
 struct Foo{Tag, T}
     x::T
 end
 
 @inline Foo{Tag}(x::T) where {Tag, T} = Foo{Tag, T}(x)
 
-@inline Attrs.literal_getattr(x::Foo, f::Attr) =
-    Attrs.default_literal_getattr(x, f)
-
-@inline Attrs.literal_setattr!(x::Foo, f::Attr, y) =
-    Attrs.default_literal_setattr!(x, f, y)
-
-@inline Base.getproperty(x::Foo, f::Symbol) = Attrs.default_getproperty(x, f)
-
-@inline Base.setproperty!(x::Foo, f::Symbol, y) =
-    Attrs.default_setproperty!(x, f, y)
+@defattrs Foo
 
 @inline Attrs.getattr(x::Foo{Tag}, ::Attr{:tag}) where Tag = Tag
 
@@ -29,10 +19,13 @@ end
     2 * x.x + 2
 
 h(x) = x.x
+@literalattrs h1(x) = x.x
+
 g(x) = x.y
-g1(x) = getextproperty(x, Property{:y}())
+@literalattrs g1(x) = x.y
+
 k(x) = x.z
-k1(x) = getextproperty(x, Property{:z}())
+@literalattrs k1(x) = x.z
 
 @testset "Attrs" begin
 
@@ -41,13 +34,19 @@ k1(x) = getextproperty(x, Property{:z}())
     @test h(x) == 42
     @test g(x) == 84
     @test k(x) == 85
+    @test h1(x) == 42
     @test g1(x) == 84
     @test k1(x) == 85
 
     y = Foo{:even}(42)
 
-    @test h(x) == h(y)
-    @test g(x) == g(y)
-    @test k(x) == 86
+    @test h(y) == h(x)
+    @test g(y) == g(x)
+    @test k(y) == 86
+
+    @test_throws MethodError x.a
+    @test_throws MethodError x.a = 42
+    @test_throws ErrorException x.x = 1
+    @test_throws MethodError x.y = 1
 
 end

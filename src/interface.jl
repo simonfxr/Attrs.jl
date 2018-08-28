@@ -49,7 +49,7 @@ end
 
 @inline attrnames(x) = attrnames(typeof(x))
 
-@inline function default_getattr(x, f::Attr)
+@inline function default_literal_getattr(x, f::Attr)
     res = trygetfield(x, f)
     if res ≡ NoSuchAttr()
         getattr(x, f)
@@ -58,9 +58,7 @@ end
     end
 end
 
-@inline default_getproperty(x, f::Symbol) = default_getattr(x, Attr{f}())
-
-@inline function default_setattr!(x, f::Attr, y)
+@inline function default_literal_setattr!(x, f::Attr, y)
     res = trysetfield!(x, f, y)
     if res ≡ NoSuchAttr()
         setattr!(x, f, y)
@@ -69,5 +67,8 @@ end
     end
 end
 
+@inline default_getproperty(x, f::Symbol) =
+    default_literal_getattr(x, Attr{f}())
+
 @inline default_setproperty!(x, f::Symbol, y) =
-    default_setattr!(x, Attr{f}(), y)
+    default_literal_setattr!(x, Attr{f}(), y)

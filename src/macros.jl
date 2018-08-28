@@ -43,13 +43,14 @@ function deepliteralattrs(ex::Expr)
     setprop = match_setproperty!(ex)
     if setprop !== nothing
         tgt, field, src = map(deepliteralattrs, setprop)
-        return :(literal_setattr!($tgt, Attr{$(Meta.quot(field))}(), $src))
+        return :(Attrs.literal_setattr!($tgt,
+                                        Attr{$(Meta.quot(field))}(), $src))
     end
 
     getprop = match_getproperty(ex)
     if getprop !== nothing
         src, field = map(deepliteralattrs, getprop)
-        return :(literal_getattr($src, Attr{$(Meta.quot(field))}()))
+        return :(Attrs.literal_getattr($src, Attr{$(Meta.quot(field))}()))
     end
 
     newex = Expr(ex.head)
@@ -95,7 +96,7 @@ macro defattrs(T)
                 Attrs.default_literal_setattr!($x, $f, $y)
 
         @inline Base.setproperty!(
-            $x::$DT, $f::Base.Symbol, y) where {$(params...)} =
+            $x::$DT, $f::Base.Symbol, $y) where {$(params...)} =
                 Attrs.default_setproperty!($x, $f, $y)
     end |> esc
 end
