@@ -1,4 +1,4 @@
-The ExtensibleProperties.jl package is licensed under the MIT "Expat" License:
+The Attrs.jl package is licensed under the MIT "Expat" License:
 
 > Copyright (c) 2018: Simon Reiser <simonfxr@gmail.com>
 >

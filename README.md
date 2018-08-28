@@ -1,5 +1,6 @@
-# ExtensibleProperties
 
-[![Build Status](https://travis-ci.org/simonfxr/ExtensibleProperties.jl.svg?branch=master)](https://travis-ci.org/simonfxr/ExtensibleProperties.jl)
+# Attrs
 
-[![codecov.io](http://codecov.io/github/simonfxr/ExtensibleProperties.jl/coverage.svg?branch=master)](http://codecov.io/github/simonfxr/ExtensibleProperties.jl?branch=master)
+[![Build Status](https://travis-ci.org/simonfxr/Attrs.jl.svg?branch=master)](https://travis-ci.org/simonfxr/Attrs.jl)
+
+[![codecov.io](http://codecov.io/github/simonfxr/Attrs.jl/coverage.svg?branch=master)](http://codecov.io/github/simonfxr/Attrs.jl?branch=master)
