@@ -1,0 +1,15 @@
+authors = ["Simon Reiser <simonfxr@gmail.com>"]
+name = "ExtensibleProperties"
+uuid = "506cc2a6-aaab-11e8-3c37-b783d30228bc"
+version = "0.1.0"
+
+[deps]
+
+[compat]
+julia = "0.7"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
