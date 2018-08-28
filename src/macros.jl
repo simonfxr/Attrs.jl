@@ -69,10 +69,7 @@ function deepliteralattrs(ex)
 end
 
 macro literalattrs(ex)
-    @show ex
-    newex = deepliteralattrs(ex)
-    @show newex
-    esc(newex)
+    deepliteralattrs(ex) |> esc
 end
 
 macro defattrs(T)
