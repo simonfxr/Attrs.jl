@@ -101,10 +101,13 @@ Make your type opt in to the `Attrs` package (after `using Attrs`):
 @defattrs MyOtherType{X, Y} where {X<:AbstractFloat, Y<:Integer}
 ```
 
-Define your attributes, make sure all functions that access properties of your type use the `@literalattrs` macro to make inlining possible.
+Define your attributes, make sure all `gettatr`/`settattr!` methods of your type
+use the `@literalattrs` macro to make inlining possible.
 ```julia
-
 @inline @literalattrs Attrs.getattr(x::MyType, ::Attr{:foo}) = [...]
 
 @inline @literalattrs Attrs.setattr!(x::MyType, ::Attr{:foo}, y) = [...]
 ```
+
+Now just use your type as usual: `f(x::MyType) = x.y` no `@literalattrs` is
+necessary at this point!
