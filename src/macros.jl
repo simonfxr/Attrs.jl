@@ -95,5 +95,8 @@ macro defattrs(T)
         @inline Base.setproperty!(
             $x::$DT, $f::Base.Symbol, $y) where {$(params...)} =
                 Attrs.default_setproperty!($x, $f, $y)
+
+        @inline Base.propertynames($x::$DT) where {$(params...)} =
+            Attrs.attrnames($x)
     end |> esc
 end

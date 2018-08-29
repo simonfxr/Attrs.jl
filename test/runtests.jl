@@ -1,7 +1,7 @@
 using Attrs
 using Test
 
-struct Foo{Tag, T}
+mutable struct Foo{Tag, T}
     x::T
 end
 
@@ -18,6 +18,11 @@ end
 @literalattrs Attrs.getattr(x::Foo{:even}, ::Attr{:z}) =
     2 * x.x + 2
 
+@literalattrs Attrs.setattr!(x::Foo, ::Attr{:z}, y) = x.x = div(y - 1, 2)
+
+@literalattrs Attrs.setattr!(x::Foo{:even}, ::Attr{:z}, y) =
+    x.x = div(y, 2) - 1
+
 h(x) = x.x
 @literalattrs h1(x) = x.x
 
@@ -30,7 +35,7 @@ k(x) = x.z
 @testset "Attrs" begin
 
     x = Foo{:foo}(42)
-    
+
     @test h(x) == 42
     @test g(x) == 84
     @test k(x) == 85
@@ -44,9 +49,26 @@ k(x) = x.z
     @test g(y) == g(x)
     @test k(y) == 86
 
+    @test begin
+        x2 = deepcopy(x)
+        x2.x = -1
+        x2.x == -1
+    end
+
+    @test begin
+        x2 = deepcopy(x)
+        x2.z = 85
+        x2.x == 42
+    end
+
+    @test begin
+        y2 = deepcopy(y)
+        y2.z = 86
+        y2.x == 42
+    end
+
     @test_throws MethodError x.a
     @test_throws MethodError x.a = 42
-    @test_throws ErrorException x.x = 1
     @test_throws MethodError x.y = 1
 
 end
