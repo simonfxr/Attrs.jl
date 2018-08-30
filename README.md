@@ -2,7 +2,7 @@
 # Attrs
 
 [![Build Status](https://travis-ci.org/simonfxr/Attrs.jl.svg?branch=master)](https://travis-ci.org/simonfxr/Attrs.jl)
-
+[![Build status](https://ci.appveyor.com/api/projects/status/02eg0ctefyvpufe9?svg=true)](https://ci.appveyor.com/project/simonfxr/attrs-jl)
 [![codecov.io](http://codecov.io/github/simonfxr/Attrs.jl/coverage.svg?branch=master)](http://codecov.io/github/simonfxr/Attrs.jl?branch=master)
 
 Give Attribtures the treatment they deserve: use dynamic dispatch to implement
